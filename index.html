@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Seedance 2 Deep Dive: A Stable Everyday Video Baseline</title><style>body{font-family:-apple-system,Segoe UI,sans-serif;max-width:820px;margin:30px auto;padding:0 18px;line-height:1.75;color:#222}img{max-width:100%}table{border-collapse:collapse}td,th{border:1px solid #ddd;padding:6px 9px}</style></head><body><h1>Seedance 2 Deep Dive: A Stable Everyday Video Baseline</h1>
+<p><img alt="Cover for Seedance 2" src="images/cover.png" /></p>
+<p><strong>TLDR</strong> Seedance 2 is positioned as a stable baseline for everyday text-to-video and image-to-video work. On the same site, Seedance 2.5 is the newer route when a shot needs stronger motion and a more finished look.</p>
+<h2>A Stable Baseline: What Seedance 2 Is For</h2>
+<p>Seedance 2 is the everyday engine for turning a clear prompt, a reference frame, or a product still into a short cinematic clip. The product page treats it as a dependable baseline rather than a peak-quality finish: image-to-video when the subject must stay visually anchored, and text-to-video when the shot can be described in language alone.</p>
+<p>That framing only holds if the neighboring options are kept in view. The same site lists Seedance 2.5 for shots that need stronger motion, richer atmosphere, and a more production-ready direction; a Fast mode for comparing directions before a final render; and Seedance 2 Mini for lighter drafts and early prompt shaping. Choosing Seedance 2 is a decision about a stable everyday path, not a claim that it is the only engine on the page.</p>
+<p>The underlying Seedance 2.0 model was officially launched by ByteDance Seed on 12 February 2026. The <a href="https://seed.bytedance.com/en/blog/official-launch-of-seedance-2-0">official Seedance 2.0 launch article</a> publishes vendor evaluations of text-to-video, image-to-video, and multimodal reference tasks. Those charts compare Seedance 2.0 with earlier Seedance, Wan, Veo, and Kling releases available at the time. They are developer evaluations, not an independent arena.</p>
+<p><img alt="ByteDance Seed official image-to-video evaluation chart for Seedance 2.0, covering motion quality, prompt following, image preservation, and audio dimensions against Seedance 1.5 Pro, Wan 2.6, Veo 3.1, Kling 3.0, and Kling 2.6." src="images/figure.jpg" /></p>
+<p><em>Source: ByteDance Seed's official Seedance 2.0 launch article. The chart is a vendor evaluation with unlabeled axis units; no numeric axis scores are read off the figure here.</em></p>
+<h2>Key Takeaways</h2>
+<ul>
+<li><strong>Baseline role:</strong> Seedance 2 is documented as a stable everyday text-to-video and image-to-video workflow, with reference-led control of subject, movement, camera, and style.</li>
+<li><strong>Neighboring modes:</strong> Seedance 2.5 is the newer cinematic option on the same site. Fast and Mini are listed for drafts and comparisons, not as replacements for the baseline.</li>
+<li><strong>Official 2.0 launch date:</strong> ByteDance Seed published the Seedance 2.0 launch article on 12 February 2026, including vendor radar evaluations of I2V and multimodal tasks.</li>
+<li><strong>Independent Elo, as of 10 November 2026:</strong> On AA-Video-T2V v2.1, Dreamina Seedance 2.0 stands at Elo 1137 ± 13 (6,577 samples; rank 10, range 7–12). Dreamina Seedance 2.5 stands at 1155 ± 13 (7,581 samples; rank 4, range 3–7).</li>
+<li><strong>What remains unpublished on the product page:</strong> A fixed maximum duration and a complete resolution list are not stated as hard numbers on the Seedance 2 page reviewed here. Official 2.0 materials describe 15-second multi-shot output for that model release.</li>
+</ul>
+<h2>Seedance 2 at a Glance</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Feature / Metric</strong></th>
+<th style="text-align: left;"><strong>Seedance 2</strong></th>
+<th style="text-align: left;"><strong>Status / Source</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Role on the site</strong></td>
+<td style="text-align: left;">Stable baseline for everyday T2V and I2V</td>
+<td style="text-align: left;">Product page</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Newer option on the same site</strong></td>
+<td style="text-align: left;">Seedance 2.5, for stronger motion and finished direction</td>
+<td style="text-align: left;">Product page</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Draft routes</strong></td>
+<td style="text-align: left;">Fast mode; Seedance 2 Mini</td>
+<td style="text-align: left;">Product page</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Typical inputs</strong></td>
+<td style="text-align: left;">Prompt plus supported visual references</td>
+<td style="text-align: left;">Product page</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Official 2.0 launch</strong></td>
+<td style="text-align: left;">12 February 2026</td>
+<td style="text-align: left;">ByteDance Seed blog</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Official 2.0 reference mix (model release)</strong></td>
+<td style="text-align: left;">Up to 9 images, 3 video clips, and 3 audio clips, plus language</td>
+<td style="text-align: left;">Official launch article</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Official 2.0 clip length (model release)</strong></td>
+<td style="text-align: left;">15-second high-quality multi-shot output</td>
+<td style="text-align: left;">Official launch article</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AA-Video-T2V v2.1 (10 Nov 2026)</strong></td>
+<td style="text-align: left;">Dreamina Seedance 2.0: Elo 1137 ± 13</td>
+<td style="text-align: left;">Artificial Analysis</td>
+</tr>
+</tbody>
+</table>
+<h2>How the Baseline Workflow Is Built</h2>
+<p>The product page describes a three-step loop: describe the idea or add a reference, set the direction, then generate and refine. The brief should name the subject, action, camera move, and style. Image-to-video is the right branch when a still already defines appearance or composition.</p>
+<pre><code class="language-text">Seedance 2 everyday loop
+[Text prompt]
+    + optional [Reference image / supported references]
+            |
+            v
+    Choose: Seedance 2 (baseline)
+         or Seedance 2.5 (newer cinematic route)
+         or Fast / Mini (draft comparison)
+            |
+            v
+    Short clip  -&gt;  review subject, motion, camera  -&gt;  revise one variable
+</code></pre>
+<p>Official 2.0 materials describe a unified multimodal audio-video architecture, two-channel audio, video extension, and targeted editing. The <a href="https://seedance2-5.co/seedance-2">Seedance 2 AI Video Generator</a> page does not restate every one of those limits as workspace constants, so this article treats the 15-second multi-shot figure and the 9/3/3 reference mix as properties of the official launch write-up, not as numbers invented for the webpage.</p>
+<h2>Motion, People, and What the Evaluations Show</h2>
+<p>The product page highlights two production strengths: people-focused motion (body movement, pose, and stable subjects for fashion, lifestyle, and character scenes) and film-like camera language (tracking, push-ins, laterals, orbits, and smoother transitions). Those are capability descriptions, not scored tests.</p>
+<p>The official I2V radar places Seedance 2.0 outside the comparison set on the drawn axes for motion quality, video and audio prompt following, image preservation, audio-visual sync, and audio expressiveness, relative to Seedance 1.5 Pro, Wan 2.6, Veo 3.1, Kling 3.0, and Kling 2.6. Because the figure does not label numeric axis ticks, this article does not invent scores from the drawing. The launch text itself still notes remaining work on detail stability, hyper-realism, dynamic vitality, and occasional audio distortion.</p>
+<p>Separately, the 10 November 2026 capture of AA-Video-T2V v2.1 ranks Dreamina Seedance 2.5 above Dreamina Seedance 2.0 (1155 ± 13 against 1137 ± 13). That gap is consistent with using 2.5 when the finished look matters more. It is still a preference Elo, not a production measurement for a specific brief.</p>
+<h2>Which Route Should You Use?</h2>
+<p><strong>Choose Seedance 2 if:</strong></p>
+<ul>
+<li><strong>Everyday generation:</strong> The brief is clear and you want a stable baseline rather than the newest cinematic route.</li>
+<li><strong>Image anchoring:</strong> A still should define the subject, product, or composition before motion is added.</li>
+<li><strong>People and camera language:</strong> The shot depends on readable body motion or a described camera move.</li>
+</ul>
+<p><strong>Choose Seedance 2.5, Fast, or Mini if:</strong></p>
+<ul>
+<li><strong>Finished direction:</strong> Seedance 2.5 is the listed option when motion, atmosphere, and a more polished result are the priority.</li>
+<li><strong>Comparison first:</strong> Fast mode is listed for prompt tests and creative comparisons before a final generate.</li>
+<li><strong>Early shaping:</strong> Mini is listed for lighter drafts and simple motion tests.</li>
+</ul>
+<h2>Frequently Asked Questions</h2>
+<h3>What is Seedance 2?</h3>
+<p>It is an AI video workflow for short clips from prompts and supported references, documented as a stable baseline for everyday text-to-video and image-to-video work.</p>
+<h3>When should Seedance 2.5 be used instead?</h3>
+<p>The product page points to Seedance 2.5 when the shot needs stronger motion, richer atmosphere, and a more production-ready visual direction.</p>
+<h3>Can an image be animated?</h3>
+<p>Yes. The image-to-video path starts from a reference still. The prompt should describe the action and camera movement, then the clip should be reviewed for subject drift.</p>
+<h3>What do the official and independent evaluations show?</h3>
+<p>ByteDance Seed's launch article includes vendor I2V and multimodal radars for Seedance 2.0. Independently, AA-Video-T2V v2.1 (10 November 2026) lists Dreamina Seedance 2.0 at Elo 1137 ± 13 and Dreamina Seedance 2.5 at 1155 ± 13.</p>
+<h3>Does the product page state a maximum clip length?</h3>
+<p>Not as a hard number on the page reviewed here. The official 2.0 launch article describes 15-second high-quality multi-shot output for that model release.</p>
+<h2>What to Watch Next</h2>
+<p>The product page still leaves duration and resolution as workspace settings rather than as a public table, and the official I2V radar does not replace a current independent I2V breakdown of Seedance 2 versus 2.5. Until those tables exist, Seedance 2 remains the everyday baseline, with 2.5 reserved for the more finished shot.</p></body></html>
